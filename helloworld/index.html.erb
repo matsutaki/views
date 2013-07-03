@@ -1,0 +1,18 @@
+
+<div class="hero-unit">
+  <p>
+  	<%# @json.each do |json| %>
+  		<% commits = json_to_hash(@json[0]["url"]) %> 
+  		
+      <%content = json_to_hash(commits["files"][1]["contents_url"])%><br /><br />
+
+      <pre><%=b64_to_txt(content["content"])%></pre><br />
+      
+  	<%#end%>
+  	<%=@hoge%>
+  </p>
+  <%= link_to "githubでログイン","/auth/github"%>
+<%= session[:uid] %>
+<br />
+
+</div>

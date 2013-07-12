@@ -4,8 +4,14 @@
         function() {
             $(this).button('loading');
             }
-        )
-    } );
+        );
+        $('a[href=#]').click(function(){
+            return false;
+        });
+        $( "li[id*='itemlist']" ).click(function() {
+            $(this).children("ul").slideToggle();
+        });
+    });
 
 </script>
 
@@ -15,14 +21,20 @@
 		<input type="submit" />
 	<% end %>
     
-    <%= button_to "Github",  {:action => "ajax",:para => 1}, {:remote => true, :id => "ajax1", :class => "btn-primary"}%>
-    <%= button_to "Other",  {:action => "ajax",:para => 2}, {:remote => true, :id => "ajax2", :class => "btn-primary"}%>
-    <div id="result"></div>
+    <%#= button_to "Github",  {:action => "ajax",:para => 1}, {:remote => true, :id => "ajax1", :class => "btn-primary"}%>
+    <%#= button_to "Other",  {:action => "ajax",:para => 2}, {:remote => true, :id => "ajax2", :class => "btn-primary"}%>
+    <%= form_tag('/ajax', :remote => true) do %>
+        <%= text_field_tag :name %>
+        <%= submit_tag "アイテムリスト作成"%>
+    <% end %>
 
-
+     <div id="result"><%=render :partial => "show_itemlists"%></div>
 
     <%if !@user.token then%>
         <%= link_to "githubのデータを登録する","/auth/github"%>
+    <%else%>
+        <%@json = json_to_hash("https://api.github.com/repos/#{@user.github_name}/views/commits", @user.token)%>
+        <%= render :partial => "show_json"%>
     <% end %>
     <%= @hoge %>
 <br />

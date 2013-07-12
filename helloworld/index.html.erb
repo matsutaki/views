@@ -1,14 +1,32 @@
+<script type="text/javascript">
+    $( function() {
+        $( "input[id*='ajax']" ) .click(
+        function() {
+            $(this).button('loading');
+            }
+        )
+    } );
+
+</script>
 
 <div class="hero-unit">
-  <p>
-    <p>Now:<%=Time.now%></p>
+	<%= form_tag("/upload", :multipart => true) do %>
+		<input name="attachment" type="file"/>
+		<input type="submit" />
+	<% end %>
     
-    <%=link_to '更新やで', {:action =>'upup'}, :remote => true%>
+    <%= button_to "Github",  {:action => "ajax",:para => 1}, {:remote => true, :id => "ajax1", :class => "btn-primary"}%>
+    <%= button_to "Other",  {:action => "ajax",:para => 2}, {:remote => true, :id => "ajax2", :class => "btn-primary"}%>
     <div id="result"></div>
-  	<%=@hoge%>
-  </p>
-  <%= link_to "githubでログイン","/auth/github"%>
-<%= session[:uid] %>
+
+
+
+    <%if !@user.token then%>
+        <%= link_to "githubのデータを登録する","/auth/github"%>
+    <% end %>
+    <%= @hoge %>
 <br />
+session:<%= session[:uid] %><br />
+u_name:<%= @user.name %>
 
 </div>

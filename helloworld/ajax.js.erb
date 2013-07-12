@@ -1,0 +1,6 @@
+
+$('#result').empty();
+$('#result').html(
+	"<%=escape_javascript(render :partial => @par)%>"
+);
+$("<%= @selector %>").button('reset');

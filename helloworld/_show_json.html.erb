@@ -1,5 +1,4 @@
-
-	<% commits = json_to_hash(@json[0]["url"]) %> 
-	<% content = json_to_hash(commits["files"][0]["contents_url"])%>
+	<% commits = json_to_hash(@json[0]["url"],@user.token) %> 
+	<% content = json_to_hash(commits["files"][0]["contents_url"],@user.token)%>
 	<pre><%=b64_to_txt(content["content"])%></pre>
 
